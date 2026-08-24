@@ -5,3 +5,4 @@ Creates rss feeds for non-rss sources
 Create feeds for:
 
 - https://support.claude.com/en/articles/12138966-release-notes
+- https://openai.com/news/ai-futures/
