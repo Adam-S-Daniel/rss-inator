@@ -95,3 +95,26 @@ session that lost the guidance must not also lose these.
 ## Repo-specific additions
 
 <!-- Add your repo-specific agent guidance below this line -->
+
+### Feeds are published to Pages, never committed
+
+`feeds.yml` builds every feed hourly and deploys the `site/` directory to
+GitHub Pages. Nothing is pushed to a branch, so the job needs no bypass of
+the default branch's protection. Keep it that way: don't "cache" feeds by
+committing them.
+
+A source that fails (fetch error, or its extractor finds no items) falls back
+to its currently published copy, fetched from the Pages URL, so a layout
+change on one site never empties that feed or blocks the others. The run fails
+only when every source fails.
+
+### Workflow salient paths
+
+| Workflow | Trigger | Paths |
+| --- | --- | --- |
+| `feeds.yml` | `schedule` hourly, `workflow_dispatch`, `push` to `main` | `rssinator/**`, `requirements.txt`, `.github/workflows/feeds.yml` |
+| `ci.yml` | `pull_request` | `rssinator/**`, `tests/**`, `requirements.txt`, `requirements-dev.txt`, `.github/workflows/ci.yml` |
+
+`ci.yml`'s `test` job is not yet a required check: making it required means
+dropping its `paths:` filter (a skipped required check blocks the merge) and a
+ruleset change in repo-settings.
