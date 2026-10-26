@@ -84,7 +84,8 @@ def index_page(base_url: str, status: dict[str, str], now: datetime) -> str:
     )
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>rss-inator feeds</title>
-<meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow"></head>
 <body><h1>rss-inator feeds</h1>
 <p>Import every feed at once: <a href="feeds.opml">{html.escape(base_url)}feeds.opml</a></p>
 <ul>

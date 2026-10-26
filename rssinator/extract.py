@@ -22,6 +22,7 @@ MONTHS = "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec"
 DATE_RE = re.compile(rf"\b(?:{MONTHS})[a-z]*\.? \d{{1,2}}(?:st|nd|rd|th)?,? \d{{4}}\b|\b\d{{4}}-\d{{2}}-\d{{2}}\b")
 MONTH_RE = re.compile(rf"^(?:{MONTHS})[a-z]* \d{{4}}$")
 HEADINGS = ["h1", "h2", "h3", "h4", "h5"]
+EXCERPT_CHARS = 280
 
 
 class ExtractError(ValueError):
@@ -54,6 +55,13 @@ def _text(tag: Tag | None) -> str:
     return tag.get_text(" ", strip=True) if tag else ""
 
 
+def excerpt(text: str, limit: int = EXCERPT_CHARS) -> str:
+    """Cut text to at most limit characters at a word boundary."""
+    if len(text) <= limit:
+        return text
+    return text[:limit].rsplit(" ", 1)[0].rstrip(" ,.;:") + "…"
+
+
 def release_notes(html: str, url: str) -> list[Item]:
     """Intercom help-center article where each <h3> is a date and the blocks under it are that day's notes."""
     soup = _soup(html)
@@ -79,7 +87,8 @@ def release_notes(html: str, url: str) -> list[Item]:
                 title=f"{heading}: {first}" if first else heading,
                 link=link,
                 published=parse_date(heading),
-                summary="".join(parts),
+                # An excerpt, not the full notes: the feed is public, so it links to the text instead of copying it.
+                summary=excerpt(_text(body)),
             )
         )
     return items

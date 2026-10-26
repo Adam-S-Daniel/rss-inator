@@ -35,7 +35,9 @@ def test_build_writes_feed_opml_and_index(monkeypatch: pytest.MonkeyPatch, tmp_p
     assert feed.find("channel/item/title").text == "Hello"
     outlines = ET.parse(tmp_path / "feeds.opml").getroot().findall("body/outline")
     assert [o.get("xmlUrl") for o in outlines] == [f"{BASE}demo.xml", "https://example.org/feed"]
-    assert "updated" in (tmp_path / "index.html").read_text()
+    index = (tmp_path / "index.html").read_text()
+    assert "updated" in index
+    assert '<meta name="robots" content="noindex, nofollow">' in index
 
 
 def test_failed_source_keeps_last_published_copy(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:

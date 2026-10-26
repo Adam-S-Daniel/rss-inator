@@ -26,6 +26,10 @@ build succeeded.
 | `luma-dc2.xml` | https://luma.com/DC2 |
 | `ai-tinkerers-dc.xml` | https://dc.aitinkerers.org |
 
+Because the site is public, feeds link to the original rather than copy it:
+items carry a title, date, link and at most a short excerpt, and the index page
+is marked `noindex`.
+
 Event feeds (Luma, AI Tinkerers) carry the event date in the title or
 summary rather than as the post date, so the reader shows them when they
 first appear.

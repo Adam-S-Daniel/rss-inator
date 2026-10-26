@@ -38,10 +38,21 @@ def test_release_notes_one_item_per_dated_h3() -> None:
     items = extract.release_notes(RELEASE_NOTES, "https://example.com/notes")
     assert [i.link for i in items] == ["https://example.com/notes#d2", "https://example.com/notes#d1"]
     assert items[0].title == "March 4, 2026: Widgets for everyone"
-    assert "Widgets now ship" in items[0].summary
-    assert "Smaller fix" not in items[0].summary
+    assert items[0].summary == "Widgets for everyone Widgets now ship to every plan."
+    assert "<" not in items[0].summary
     assert items[1].title == "March 1, 2026: Smaller fix."
     assert items[1].published == datetime(2026, 3, 1, tzinfo=timezone.utc)
+
+
+def test_release_notes_summary_is_capped_excerpt() -> None:
+    long_notes = RELEASE_NOTES.replace("Widgets now ship to every plan.", "word " * 200)
+    summary = extract.release_notes(long_notes, "https://example.com/notes")[0].summary
+    assert len(summary) <= extract.EXCERPT_CHARS + 1
+    assert summary.endswith("word…")
+
+
+def test_excerpt_keeps_short_text() -> None:
+    assert extract.excerpt("short") == "short"
 
 
 def test_release_notes_without_article_is_an_error() -> None:
