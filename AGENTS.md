@@ -115,6 +115,7 @@ only when every source fails.
 | --- | --- | --- |
 | `feeds.yml` | `schedule` hourly, `workflow_dispatch`, `push` to `main` | `rssinator/**`, `requirements.txt`, `.github/workflows/feeds.yml` |
 | `ci.yml` | `pull_request` | `rssinator/**`, `tests/**`, `requirements.txt`, `requirements-dev.txt`, `.github/workflows/ci.yml` |
+| `agent-checks.yml` | `pull_request`, `push` to `main`/`master`, `workflow_dispatch` | none, deliberately: the `pull_request` trigger is unfiltered and the job always runs the commit-time checks (the fleet default check) |
 
 `ci.yml`'s `test` job is not yet a required check: making it required means
 dropping its `paths:` filter (a skipped required check blocks the merge) and a
