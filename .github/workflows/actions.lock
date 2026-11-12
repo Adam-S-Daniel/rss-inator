@@ -9,6 +9,7 @@ workflows:
     '.github/workflows/ci.yml':
         - 'actions/checkout@v7.0.1'
         - 'actions/setup-python@v7.0.0'
+    '.github/workflows/dependabot-auto-merge.yml': []
     '.github/workflows/feeds.yml':
         - 'actions/checkout@v7.0.1'
         - 'actions/deploy-pages@v5.0.1'
