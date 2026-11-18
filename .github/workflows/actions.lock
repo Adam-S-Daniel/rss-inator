@@ -5,7 +5,7 @@ version: 'v0.0.3'
 workflows:
     '.github/workflows/agent-checks.yml':
         - 'actions/checkout@v7.0.1'
-        - 'adam-s-daniel/verify-actions-lock@v1.1.0'
+        - 'adam-s-daniel/verify-actions-lock@v1.2.0'
     '.github/workflows/ci.yml':
         - 'actions/checkout@v7.0.1'
         - 'actions/setup-python@v7.0.0'
@@ -44,8 +44,8 @@ dependencies:
         repo_id: 496012378
         uses:
             - 'actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f'
-    'adam-s-daniel/verify-actions-lock@v1.1.0':
-        ref: 'v1.1.0'
-        commit: 'sha1-f3dac77f0df52b32167b2c46b70e9f1ffa9c050d'
+    'adam-s-daniel/verify-actions-lock@v1.2.0':
+        ref: 'v1.2.0'
+        commit: 'sha1-c19e5c280ff1df59d0a5143dba27682f2d04cc9c'
         owner_id: 4205216
         repo_id: 1427158560
