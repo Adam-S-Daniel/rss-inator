@@ -19,3 +19,35 @@ updates:
       # action is this account's own code, gated by its own required checks
       # before a tag exists, so the cooling-off adds nothing.
       exclude: ["Adam-S-Daniel/*", "jodidaniel/*"]
+    groups:
+      actions:
+        applies-to: version-updates
+        patterns: ["*"]
+        exclude-patterns: ["Adam-S-Daniel/*", "jodidaniel/*"]
+      actions-security:
+        applies-to: security-updates
+        patterns: ["*"]
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+    groups:
+      pip-minor-patch:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      pip-security:
+        applies-to: security-updates
+        patterns: ["*"]
+  - package-ecosystem: npm
+    directory: "/.githooks/dated-phrasing"
+    schedule:
+      interval: weekly
+    ignore:
+      - dependency-name: "*"
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
